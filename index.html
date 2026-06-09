@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="نظام متكامل لإدارة الموارد البشرية - HR Management System" />
+  <title>HR+ | نظام الموارد البشرية</title>
+
+  <!-- Google Fonts: Cairo (Arabic) + Inter (English) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/rtl.css" />
+
+  <style>
+    /* Inline critical: prevent FOUC */
+    body { opacity: 0; transition: opacity 0.3s ease; }
+    body.loaded { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <!-- JS: Order matters — data & i18n first, then utils, then app, then pages -->
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Page Modules -->
+  <script src="js/pages/landing.js"></script>
+  <script src="js/pages/dashboard.js"></script>
+  <script src="js/pages/employee.js"></script>
+  <script src="js/pages/requests.js"></script>
+  <script src="js/pages/approvals.js"></script>
+  <script src="js/pages/attendance.js"></script>
+  <script src="js/pages/payroll.js"></script>
+  <script src="js/pages/performance.js"></script>
+  <script src="js/pages/documents.js"></script>
+  <script src="js/pages/reports.js"></script>
+  <script src="js/pages/notifications.js"></script>
+  <script src="js/pages/offboarding.js"></script>
+
+  <script>
+    // Remove FOUC guard
+    document.body.classList.add('loaded');
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* ============================================
+   HR/HCM System — RTL Overrides
+   ============================================ */
+
+[dir="rtl"] .sidebar {
+  right: 0;
+  left: auto;
+  border-right: none;
+  border-left: 1px solid var(--border-color);
+}
+
+[dir="rtl"] .main-content {
+  margin-right: var(--sidebar-width);
+  margin-left: 0;
+}
+
+[dir="rtl"] .sidebar-toggle {
+  right: auto;
+  left: var(--space-4);
+}
+
+[dir="rtl"] .nav-item .nav-icon {
+  margin-left: var(--space-3);
+  margin-right: 0;
+}
+
+[dir="rtl"] .header-actions {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .breadcrumb-separator {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .timeline-line {
+  right: 18px;
+  left: auto;
+}
+
+[dir="rtl"] .timeline-dot {
+  right: 12px;
+  left: auto;
+}
+
+[dir="rtl"] .timeline-content {
+  padding-right: var(--space-10);
+  padding-left: 0;
+}
+
+[dir="rtl"] .stepper-connector {
+  right: 18px;
+  left: auto;
+}
+
+[dir="rtl"] .approval-arrow {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .notification-dot {
+  right: auto;
+  left: -2px;
+}
+
+[dir="rtl"] .modal-close {
+  right: auto;
+  left: var(--space-4);
+}
+
+[dir="rtl"] .table-actions {
+  text-align: left;
+}
+
+[dir="rtl"] .search-icon {
+  right: var(--space-3);
+  left: auto;
+}
+
+[dir="rtl"] .search-input {
+  padding-right: var(--space-10);
+  padding-left: var(--space-4);
+}
+
+[dir="rtl"] .kanban-board {
+  direction: rtl;
+}
+
+[dir="rtl"] .stat-card-icon {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .chevron-icon {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .back-btn .chevron-icon {
+  transform: scaleX(1);
+}
+
+[dir="rtl"] .tab-indicator {
+  transition: right var(--transition-base), width var(--transition-base);
+}
+
+[dir="rtl"] .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+[dir="ltr"] .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+[dir="rtl"] .form-icon-start {
+  right: var(--space-3);
+  left: auto;
+}
+
+[dir="rtl"] .form-icon-end {
+  left: var(--space-3);
+  right: auto;
+}
+
+[dir="rtl"] .badge-dot::before {
+  margin-left: var(--space-2);
+  margin-right: 0;
+}
+
+/* Flip arrows and indicators for RTL */
+[dir="rtl"] .workflow-arrow svg {
+  transform: scaleX(-1);
+}
+
+/* Fix sidebar collapse for mobile RTL */
+@media (max-width: 992px) {
+  [dir="rtl"] .sidebar {
+    transform: translateX(100%);
+  }
+  [dir="rtl"] .sidebar.open {
+    transform: translateX(0);
+  }
+  [dir="rtl"] .main-content {
+    margin-right: 0;
+  }
+}
