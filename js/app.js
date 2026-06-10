@@ -49,7 +49,7 @@ const App = {
   },
 
   navigate(page, skipHash) {
-    // Handle sub-pages with params (e.g., 'employee:EMP001')
+    // Handle sub-pages with params (e.g., 'employee:1001')
     const parts = page.split(':');
     this.currentPage = parts[0];
     const param = parts[1] || null;
@@ -101,6 +101,7 @@ const App = {
     const navItems = [
       { page: 'dashboard', icon: '📊', label: t('navDashboard') },
       { page: 'employee', icon: '👤', label: t('navEmployeeFile') },
+      { page: 'structure', icon: '🌳', label: t('navStructure') },
       { page: 'requests', icon: '📋', label: t('navRequests') },
       { page: 'approvals', icon: '✅', label: t('navApprovals'), badge: window.HRData.dashboardStats.pendingApprovals },
       { page: 'attendance', icon: '🕐', label: t('navAttendance') },
@@ -125,7 +126,7 @@ const App = {
           <div class="header-start">
             <button class="sidebar-toggle" onclick="App.toggleSidebar()" aria-label="Toggle Menu">☰</button>
             <div class="header-logo pointer" onclick="App.navigate('landing')">
-              <div class="header-logo-icon">⚡</div>
+              <div class="header-logo-icon"><img src="images/logo.png" alt="Logo"></div>
               <span class="hide-mobile">${t('appNameShort')}</span>
             </div>
           </div>

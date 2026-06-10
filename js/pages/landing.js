@@ -14,7 +14,7 @@
         <header class="landing-header">
           ${lang === 'ar' ? `
             <div class="header-logo pointer" onclick="window.App.navigate('landing')">
-              <div class="header-logo-icon">⚡</div>
+              <div class="header-logo-icon"><img src="images/logo.png" alt="Logo"></div>
               <span>${t('appNameShort')}</span>
             </div>
           ` : ''}
@@ -36,7 +36,7 @@
           
           ${lang === 'en' ? `
             <div class="header-logo pointer" onclick="window.App.navigate('landing')">
-              <div class="header-logo-icon">⚡</div>
+              <div class="header-logo-icon"><img src="images/logo.png" alt="Logo"></div>
               <span>${t('appNameShort')}</span>
             </div>
           ` : ''}

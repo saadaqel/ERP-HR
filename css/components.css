@@ -884,6 +884,8 @@
 /* ---- Search ---- */
 .search-box {
   position: relative;
+  flex: 1;
+  min-width: 200px;
 }
 .search-box .search-icon {
   position: absolute;
@@ -897,6 +899,7 @@
 
 .search-box .search-input {
   padding-inline-start: var(--space-10);
+  width: 100%;
 }
 
 /* ---- Dropdown ---- */

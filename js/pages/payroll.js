@@ -7,7 +7,7 @@
   window.Pages.payroll = function(container) {
     const t = window.App.t.bind(window.App);
     const lang = window.App.currentLang;
-    const emp = window.HRData.employees[0]; // Use EMP001 for sample
+    const emp = window.HRData.employees[0]; // Use employee 1001 for sample
     
     container.innerHTML = `
       <div class="page-header animate-fadeInDown">

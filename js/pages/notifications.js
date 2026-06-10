@@ -81,10 +81,10 @@
             </div>
             <div class="card-body" style="font-family: Arial, sans-serif;">
               <div style="text-align:center; margin-bottom:20px;">
-                <div style="font-size:32px; color:var(--primary);">HR+</div>
+                <div style="font-size:32px; color:var(--primary);">نظام ساعد</div>
               </div>
               <h2 style="font-size:18px; color:#333; margin-bottom:15px;">عزيزي المدير،</h2>
-              <p style="color:#555; line-height:1.5;">قام الموظف <strong>أحمد عبدالله (EMP001)</strong> بتقديم طلب إجازة سنوية ويحتاج إلى مراجعتك واعتمادك.</p>
+              <p style="color:#555; line-height:1.5;">قام الموظف <strong>أحمد عبدالله (1001)</strong> بتقديم طلب إجازة سنوية ويحتاج إلى مراجعتك واعتمادك.</p>
               
               <div style="background:#f9fafb; padding:15px; border-radius:8px; margin:20px 0;">
                 <div style="margin-bottom:8px;"><strong>تاريخ البداية:</strong> 15 يوليو 2024</div>
@@ -108,7 +108,7 @@
             </div>
             <div class="card-body" style="font-family: Arial, sans-serif;">
               <div style="text-align:center; margin-bottom:20px;">
-                <div style="font-size:32px; color:var(--primary);">HR+</div>
+                <div style="font-size:32px; color:var(--primary);">نظام ساعد</div>
               </div>
               <h2 style="font-size:18px; color:#333; margin-bottom:15px;">عزيزتي سارة،</h2>
               <p style="color:#555; line-height:1.5;">نود إعلامك بأنه قد تمت <span style="color:var(--success); font-weight:bold;">الموافقة</span> على طلبك رقم (REQ-2024-045).</p>
@@ -146,13 +146,13 @@
               <div style="align-self:center; font-size:11px; color:#999;">أمس 09:30 ص</div>
               
               <div style="background:#fff; padding:12px 15px; border-radius:18px; border-top-right-radius:4px; max-width:85%; align-self:flex-start; box-shadow:0 1px 2px rgba(0,0,0,0.05); font-size:14px; line-height:1.4;">
-                عزيزي الموظف،<br>تم تحويل راتب شهر مايو لحسابك البنكي بنجاح.<br>بإمكانك الاطلاع على مسير الرواتب عبر تطبيق HR+
+                عزيزي الموظف،<br>تم تحويل راتب شهر مايو لحسابك البنكي بنجاح.<br>بإمكانك الاطلاع على مسير الرواتب عبر تطبيق نظام ساعد
               </div>
               
               <div style="align-self:center; font-size:11px; color:#999;">اليوم 11:15 ص</div>
               
               <div style="background:#fff; padding:12px 15px; border-radius:18px; border-top-right-radius:4px; max-width:85%; align-self:flex-start; box-shadow:0 1px 2px rgba(0,0,0,0.05); font-size:14px; line-height:1.4;">
-                نظام HR+: لديك (3) طلبات جديدة بانتظار الاعتماد. الرجاء الدخول للنظام للمراجعة.
+                نظام ساعد: لديك (3) طلبات جديدة بانتظار الاعتماد. الرجاء الدخول للنظام للمراجعة.
               </div>
               
               <div style="background:#fff; padding:12px 15px; border-radius:18px; border-top-right-radius:4px; max-width:85%; align-self:flex-start; box-shadow:0 1px 2px rgba(0,0,0,0.05); font-size:14px; line-height:1.4;">
