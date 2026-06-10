@@ -253,22 +253,7 @@
         </div>
       </div>
 
-      <!-- Roles Section -->
-      <div class="section">
-        <h2 class="section-title mb-4">${t('roleDashboards')}</h2>
-        <div class="role-cards">
-          ${roles.map(r => `
-            <div class="card role-card ${r.id === window.App.currentRole ? 'active' : ''}" onclick="window.App.setRole('${r.id}')">
-              <div class="role-icon" style="background: ${r.bgColor}; color: ${r.color};">${r.icon}</div>
-              <div class="role-name">${currentLang === 'ar' ? r.nameAr : r.nameEn}</div>
-              <div class="role-desc">${currentLang === 'ar' ? r.descAr : r.descEn}</div>
-              ${r.id === window.App.currentRole ? `
-                <div class="badge badge-orange mt-2" style="margin-top: 8px;">${t('current')}</div>
-              ` : ''}
-            </div>
-          `).join('')}
-        </div>
-      </div>
+
     `;
   };
 })();

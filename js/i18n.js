@@ -6,7 +6,7 @@ window.i18n = {
   ar: {
     // App
     appName: 'نظام الموارد البشرية',
-    appNameShort: 'HR+',
+    appNameShort: 'نظام ساعد',
     appTagline: 'نظام متكامل لإدارة الموارد البشرية',
     
     // Navigation
@@ -23,6 +23,17 @@ window.i18n = {
     navOffboarding: 'إخلاء الطرف',
     navNotifications: 'الإشعارات',
     navSettings: 'الإعدادات',
+    navStructure: 'هيكلة الشركة',
+    vacant: 'شاغر',
+    addRootPosition: 'إضافة منصب رئيسي (أصل)',
+    addChildPosition: 'إضافة منصب فرعي (فرع)',
+    assignEmployee: 'تعيين موظف',
+    unassignEmployee: 'إلغاء تعيين الموظف',
+    deletePosition: 'حذف المنصب',
+    renamePosition: 'تعديل المسمى',
+    positionTitle: 'المسمى الوظيفي للمنصب (بالعربية)',
+    positionTitleEn: 'المسمى الوظيفي بالإنجليزية',
+    selectEmployee: 'اختر الموظف',
     
     // Landing
     heroTitle: 'نظام إدارة الموارد البشرية المتكامل',
@@ -314,7 +325,7 @@ window.i18n = {
   en: {
     // App
     appName: 'HR Management System',
-    appNameShort: 'HR+',
+    appNameShort: 'Saad System',
     appTagline: 'Integrated Human Capital Management System',
     
     // Navigation
@@ -331,6 +342,17 @@ window.i18n = {
     navOffboarding: 'Offboarding',
     navNotifications: 'Notifications',
     navSettings: 'Settings',
+    navStructure: 'Company Structure',
+    vacant: 'Vacant',
+    addRootPosition: 'Add Root Position',
+    addChildPosition: 'Add Subordinate Position',
+    assignEmployee: 'Assign Employee',
+    unassignEmployee: 'Unassign Employee',
+    deletePosition: 'Delete Position',
+    renamePosition: 'Rename Position',
+    positionTitle: 'Position Job Title (Arabic)',
+    positionTitleEn: 'Job Title in English',
+    selectEmployee: 'Select Employee',
     
     // Landing
     heroTitle: 'Integrated HR Management System',

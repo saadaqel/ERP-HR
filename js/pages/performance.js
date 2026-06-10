@@ -67,7 +67,10 @@
       <!-- Employee Performance Grid -->
       <h3 class="section-title mb-4 animate-fadeInUp stagger-2">نتائج الأداء للموظفين</h3>
       <div class="filter-bar animate-fadeInUp stagger-2">
-        <select class="form-select"><option>قسم تقنية المعلومات</option><option>قسم الموارد البشرية</option></select>
+        <select class="form-select">
+          <option value="">${t('allDepartments')}</option>
+          ${[...new Set(employees.map(e => e.department[lang === 'ar' ? 'ar' : 'en']))].map(d => `<option value="${d}">${d}</option>`).join('')}
+        </select>
         <select class="form-select"><option>دورة 2023</option><option>دورة 2022</option></select>
         <div class="search-box">
           <span class="search-icon">🔍</span>

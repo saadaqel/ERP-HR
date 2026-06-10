@@ -43,7 +43,7 @@
     
     // VIEW 2: My Requests (if param is 'all')
     if (reqParam === 'all') {
-      const myReqs = window.HRData.requests.filter(r => r.employeeId === 'EMP001'); // Mocking current user as EMP001
+      const myReqs = window.HRData.requests.filter(r => r.employeeId === '1001'); // Mocking current user as 1001
       
       container.innerHTML = `
         <div class="page-header animate-fadeInDown">

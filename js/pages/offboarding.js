@@ -8,7 +8,7 @@
     const t = window.App.t.bind(window.App);
     const lang = window.App.currentLang;
     const checklist = window.HRData.offboardingChecklist;
-    const emp = window.HRData.employees.find(e => e.id === 'EMP005'); // Sample resigning employee
+    const emp = window.HRData.employees.find(e => e.id === '1005'); // Sample resigning employee
 
     window.OffboardingActions = {
       toggleCheck: (id) => {
