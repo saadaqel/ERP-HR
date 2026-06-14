@@ -9,6 +9,17 @@
     const lang = window.App.currentLang;
     const reqs = window.HRData.requests;
     
+    const getSla = (req) => {
+      if (req.sla) return req.sla;
+      const created = new Date(req.createdDate);
+      const current = (req.status === 'pending' || req.status === 'in-progress')
+        ? new Date('2026-06-11')
+        : new Date(req.updatedDate || req.createdDate);
+      const diffMs = current - created;
+      const diffDays = Math.floor(diffMs / 86400000);
+      return diffDays > 0 ? diffDays : 1;
+    };
+    
     // Group requests by status
     const pending = reqs.filter(r => r.status === 'pending');
     const inProgress = reqs.filter(r => r.status === 'in-progress');
@@ -88,7 +99,7 @@
         <div class="card kanban-card card-clickable" onclick="window.ApprovalActions.showActionModal('${req.id}')">
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:var(--space-2);">
             <span class="font-semibold text-sm">${req.id}</span>
-            <span class="badge ${window.Utils.getStatusBadge(req.status)}" style="font-size:10px;">${req.sla} ${t('days')}</span>
+            <span class="badge ${window.Utils.getStatusBadge(req.status)}" style="font-size:10px;">${getSla(req)} ${t('days')}</span>
           </div>
           <div class="font-bold mb-1">${window.Utils.getLocal(req.typeLabel)}</div>
           <div class="text-sm text-secondary mb-2">${lang === 'ar' ? emp.nameAr : emp.nameEn}</div>
@@ -196,7 +207,7 @@
                   <td class="font-semibold">${r.id}</td>
                   <td>${window.Utils.getLocal(r.typeLabel)}</td>
                   <td>${lang === 'ar' ? emp.nameAr : emp.nameEn}</td>
-                  <td>${r.sla} ${t('days')}</td>
+                  <td>${getSla(r)} ${t('days')}</td>
                   <td><span class="badge ${window.Utils.getStatusBadge(r.status)}">${window.Utils.getLocal(r.statusLabel)}</span></td>
                   <td>
                     ${r.status === 'pending' ? `

@@ -26,6 +26,124 @@
     const lang = window.App.currentLang;
     
     window.StructureActions = {
+      currentScale: (window.StructureActions && window.StructureActions.currentScale) || 1.0,
+
+      zoomIn: () => {
+        let scale = window.StructureActions.currentScale || 1.0;
+        scale = Math.min(scale + 0.1, 2.0);
+        window.StructureActions.currentScale = scale;
+        window.StructureActions.applyZoom();
+      },
+
+      zoomOut: () => {
+        let scale = window.StructureActions.currentScale || 1.0;
+        scale = Math.max(scale - 0.1, 0.4);
+        window.StructureActions.currentScale = scale;
+        window.StructureActions.applyZoom();
+      },
+
+      resetZoom: () => {
+        window.StructureActions.currentScale = 1.0;
+        window.StructureActions.applyZoom();
+        
+        const viewport = document.getElementById('org-viewport');
+        const scaler = document.getElementById('org-scaler');
+        if (viewport && scaler) {
+          const orgTree = scaler.querySelector('.org-tree');
+          if (orgTree) {
+            viewport.scrollLeft = (orgTree.offsetWidth - viewport.clientWidth) / 2;
+            viewport.scrollTop = 0;
+          }
+        }
+      },
+
+      applyZoom: () => {
+        const scaler = document.getElementById('org-scaler');
+        if (scaler) {
+          scaler.style.transform = `scale(${window.StructureActions.currentScale || 1.0})`;
+        }
+      },
+
+      initPanZoom: () => {
+        const viewport = document.getElementById('org-viewport');
+        const scaler = document.getElementById('org-scaler');
+        if (!viewport || !scaler) return;
+
+        let isDown = false;
+        let startX, startY;
+        let scrollLeft, scrollTop;
+
+        // Mouse events
+        viewport.addEventListener('mousedown', (e) => {
+          if (e.button !== 0) return; // Only drag with left click
+          isDown = true;
+          viewport.style.cursor = 'grabbing';
+          startX = e.pageX - viewport.offsetLeft;
+          startY = e.pageY - viewport.offsetTop;
+          scrollLeft = viewport.scrollLeft;
+          scrollTop = viewport.scrollTop;
+        });
+
+        viewport.addEventListener('mouseleave', () => {
+          isDown = false;
+          viewport.style.cursor = 'grab';
+        });
+
+        viewport.addEventListener('mouseup', () => {
+          isDown = false;
+          viewport.style.cursor = 'grab';
+        });
+
+        viewport.addEventListener('mousemove', (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - viewport.offsetLeft;
+          const y = e.pageY - viewport.offsetTop;
+          const walkX = (x - startX);
+          const walkY = (y - startY);
+          viewport.scrollLeft = scrollLeft - walkX;
+          viewport.scrollTop = scrollTop - walkY;
+        });
+
+        // Touch events
+        viewport.addEventListener('touchstart', (e) => {
+          isDown = true;
+          startX = e.touches[0].pageX - viewport.offsetLeft;
+          startY = e.touches[0].pageY - viewport.offsetTop;
+          scrollLeft = viewport.scrollLeft;
+          scrollTop = viewport.scrollTop;
+        });
+
+        viewport.addEventListener('touchend', () => {
+          isDown = false;
+        });
+
+        viewport.addEventListener('touchmove', (e) => {
+          if (!isDown) return;
+          const x = e.touches[0].pageX - viewport.offsetLeft;
+          const y = e.touches[0].pageY - viewport.offsetTop;
+          const walkX = (x - startX);
+          const walkY = (y - startY);
+          viewport.scrollLeft = scrollLeft - walkX;
+          viewport.scrollTop = scrollTop - walkY;
+        });
+
+        // Horizontal centering helper
+        setTimeout(() => {
+          const orgTree = scaler.querySelector('.org-tree');
+          if (orgTree && viewport) {
+            const treeWidth = orgTree.scrollWidth || orgTree.offsetWidth;
+            const viewportWidth = viewport.clientWidth;
+            if (treeWidth > viewportWidth) {
+              viewport.scrollLeft = (treeWidth - viewportWidth) / 2;
+            } else {
+              viewport.scrollLeft = 0;
+            }
+            viewport.scrollTop = 0;
+          }
+        }, 50);
+      },
+
       renderAll: () => {
         const nodes = window.HRData.companyStructure;
         
@@ -80,11 +198,25 @@
           </div>
           
           <div class="org-tree-container animate-fadeInUp">
-            <div class="org-tree">
-              ${roots.length > 0 ? roots.map(renderNode).join('') : `<div class="empty-state"><div class="empty-state-icon">🌳</div><div class="empty-state-title">${lang === 'ar' ? 'الهيكل فارغ' : 'Structure is empty'}</div></div>`}
+            <div class="org-tree-viewport" id="org-viewport">
+              <div class="org-tree-scaler" id="org-scaler">
+                <div class="org-tree">
+                  ${roots.length > 0 ? roots.map(renderNode).join('') : `<div class="empty-state"><div class="empty-state-icon">🌳</div><div class="empty-state-title">${lang === 'ar' ? 'الهيكل فارغ' : 'Structure is empty'}</div></div>`}
+                </div>
+              </div>
+            </div>
+            <!-- Floating Controls -->
+            <div class="org-controls">
+              <button class="org-control-btn" onclick="window.StructureActions.zoomIn()" title="${lang === 'ar' ? 'تكبير' : 'Zoom In'}">➕</button>
+              <button class="org-control-btn" onclick="window.StructureActions.zoomOut()" title="${lang === 'ar' ? 'تصغير' : 'Zoom Out'}">➖</button>
+              <button class="org-control-btn" onclick="window.StructureActions.resetZoom()" title="${lang === 'ar' ? 'إعادة ضبط' : 'Reset Zoom'}">🎯</button>
             </div>
           </div>
         `;
+
+        // Initialize pan, zoom, and centering
+        window.StructureActions.initPanZoom();
+        window.StructureActions.applyZoom();
       },
 
       showNodeOptions: (id) => {
@@ -243,7 +375,7 @@
         }
         
         const newId = Date.now().toString();
-        window.HRData.companyStructure.push({
+        window.HRData.companyStructure.unshift({
           id: newId,
           titleAr,
           titleEn,

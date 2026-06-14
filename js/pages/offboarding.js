@@ -103,28 +103,31 @@
             <div class="card-body">
               <div class="timeline">
                 <div class="timeline-item completed">
-                  <div class="timeline-marker"></div>
+                  <div class="timeline-connector"></div>
+                  <div class="timeline-marker">✓</div>
                   <div class="timeline-content">
                     <div class="timeline-title">تقديم الاستقالة</div>
                     <div class="text-xs text-tertiary">15 مايو 2024</div>
                   </div>
                 </div>
                 <div class="timeline-item current">
-                  <div class="timeline-marker"></div>
+                  <div class="timeline-connector"></div>
+                  <div class="timeline-marker">⏳</div>
                   <div class="timeline-content">
                     <div class="timeline-title text-primary">إخلاء الطرف (الأقسام)</div>
                     <div class="text-xs text-tertiary">قيد الإجراء</div>
                   </div>
                 </div>
-                <div class="timeline-item">
-                  <div class="timeline-marker"></div>
+                <div class="timeline-item pending">
+                  <div class="timeline-connector"></div>
+                  <div class="timeline-marker">🔒</div>
                   <div class="timeline-content">
                     <div class="timeline-title">التسوية النهائية</div>
                     <div class="text-xs text-tertiary">المالية</div>
                   </div>
                 </div>
-                <div class="timeline-item">
-                  <div class="timeline-marker"></div>
+                <div class="timeline-item pending">
+                  <div class="timeline-marker">🔒</div>
                   <div class="timeline-content">
                     <div class="timeline-title">المخالصة النهائية</div>
                     <div class="text-xs text-tertiary">الموارد البشرية</div>
