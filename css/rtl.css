@@ -43,8 +43,9 @@
 }
 
 [dir="rtl"] .timeline-content {
-  padding-right: var(--space-10);
+  padding-right: 0;
   padding-left: 0;
+  text-align: right;
 }
 
 [dir="rtl"] .stepper-connector {
@@ -131,8 +132,21 @@
   transform: scaleX(-1);
 }
 
+/* RTL Company Structure Line Connectors */
+[dir="rtl"] .org-children > .org-node-wrapper:first-child::before {
+  right: 50%;
+  width: 50%;
+  left: auto;
+}
+
+[dir="rtl"] .org-children > .org-node-wrapper:last-child::before {
+  left: 50%;
+  width: 50%;
+  right: auto;
+}
+
 /* Fix sidebar collapse for mobile RTL */
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   [dir="rtl"] .sidebar {
     transform: translateX(100%);
   }

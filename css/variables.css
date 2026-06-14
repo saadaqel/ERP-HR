@@ -113,6 +113,20 @@
   --content-padding: var(--space-8);
 }
 
+@media (max-width: 1366px) {
+  :root {
+    --sidebar-width: 230px;
+    --content-padding: var(--space-5);
+  }
+}
+
+@media (max-width: 1200px) {
+  :root {
+    --sidebar-width: 210px;
+    --content-padding: var(--space-4);
+  }
+}
+
 /* Language-specific font switching */
 [dir="rtl"] {
   --font-family: var(--font-ar);

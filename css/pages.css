@@ -87,7 +87,7 @@
   grid-template-columns: 1fr 360px;
   gap: var(--space-6);
 }
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   .request-detail-grid { grid-template-columns: 1fr; }
 }
 
@@ -402,17 +402,81 @@
 
 /* ---- Organization Chart (.org-tree) ---- */
 .org-tree-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-x: auto;
-  padding: var(--space-8) var(--space-4);
+  position: relative;
   background: var(--bg-card);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-card);
   border: 1px solid var(--border-light);
-  min-height: 550px;
+  overflow: hidden;
   width: 100%;
+}
+
+.org-tree-viewport {
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+  overflow: auto;
+  cursor: grab;
+  position: relative;
+  padding: 2.5rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  scrollbar-width: thin;
+}
+
+.org-tree-viewport:active {
+  cursor: grabbing;
+}
+
+.org-tree-scaler {
+  transform-origin: top center;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  justify-content: center;
+  min-width: 100%;
+}
+
+/* Org controls floating panel */
+.org-controls {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+  background: var(--bg-card);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-light);
+}
+
+[dir="rtl"] .org-controls {
+  left: 20px;
+}
+[dir="ltr"] .org-controls {
+  right: 20px;
+}
+
+.org-control-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.org-control-btn:hover {
+  background: var(--accent-orange-light);
+  color: var(--accent-orange);
 }
 
 .org-tree {
@@ -423,8 +487,8 @@
 
 .org-children {
   display: flex;
-  gap: 32px;
-  margin-top: 30px;
+  gap: 2rem;
+  margin-top: 1.875rem;
   position: relative;
   justify-content: center;
 }
@@ -490,10 +554,10 @@
 .org-children::before {
   content: '';
   position: absolute;
-  top: -15px;
+  top: -0.9375rem;
   left: 50%;
   width: 2px;
-  height: 15px;
+  height: 0.9375rem;
   background: var(--border-color);
   transform: translateX(-50%);
 }
@@ -501,10 +565,10 @@
 .org-node-wrapper::after {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -0.9375rem;
   left: 50%;
   width: 2px;
-  height: 15px;
+  height: 0.9375rem;
   background: var(--border-color);
   transform: translateX(-50%);
 }
@@ -515,7 +579,7 @@
 
 .org-children > .org-node-wrapper {
   position: relative;
-  padding-top: 15px;
+  padding-top: 0.9375rem;
 }
 
 .org-children > .org-node-wrapper::before {
@@ -546,10 +610,40 @@
 .org-children > .org-node-wrapper > .org-node::before {
   content: '';
   position: absolute;
-  top: -15px;
+  top: -0.9375rem;
   left: 50%;
   width: 2px;
-  height: 15px;
+  height: 0.9375rem;
   background: var(--border-color);
   transform: translateX(-50%);
+}
+
+/* ---- Enhanced Payroll Page ---- */
+.pro-rata-input {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+.pro-rata-input:focus {
+  border-color: var(--accent-orange);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-orange-light);
+}
+.pro-rata-input:disabled {
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
+  border-color: var(--border-light);
+  cursor: not-allowed;
+}
+.toggle-container {
+  user-select: none;
+}
+.toggle-container input[type="checkbox"] {
+  accent-color: var(--accent-orange);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
 }

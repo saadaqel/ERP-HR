@@ -316,7 +316,7 @@
   background: var(--bg-card);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  overflow: hidden;
+  overflow-x: auto;
   border: 1px solid var(--border-light);
 }
 
@@ -593,18 +593,25 @@
 .timeline-connector {
   position: absolute;
   top: 36px;
-  width: 2px;
+  width: 0;
   height: calc(100% - 36px);
-  background: var(--border-color);
+  border-inline-start: 2px dashed var(--border-color);
+  background: none;
 }
-[dir="rtl"] .timeline-connector { right: 17px; }
-[dir="ltr"] .timeline-connector { left: 17px; }
+[dir="rtl"] .timeline-connector {
+  right: 17px;
+  left: auto;
+}
+[dir="ltr"] .timeline-connector {
+  left: 17px;
+  right: auto;
+}
 
 .timeline-item:last-child .timeline-connector { display: none; }
 
-.timeline-body {
+.timeline-content {
   flex: 1;
-  padding-top: var(--space-2);
+  padding-top: var(--space-1);
 }
 
 .timeline-title {
@@ -623,6 +630,40 @@
   font-size: var(--fs-xs);
   color: var(--text-tertiary);
   margin-top: var(--space-1);
+}
+
+/* ---- Compact Timeline (timeline-sm) ---- */
+.timeline-sm {
+  padding: var(--space-2) 0;
+}
+.timeline-sm .timeline-item {
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+}
+.timeline-sm .timeline-marker {
+  width: 28px;
+  height: 28px;
+  font-size: var(--fs-xs);
+}
+.timeline-sm .timeline-connector {
+  top: 28px;
+  height: calc(100% - 28px);
+}
+[dir="rtl"] .timeline-sm .timeline-connector {
+  right: 13px;
+  left: auto;
+}
+[dir="ltr"] .timeline-sm .timeline-connector {
+  left: 13px;
+  right: auto;
+}
+
+/* Status-based connector coloring */
+.timeline-item.completed .timeline-connector {
+  border-inline-start-color: var(--success);
+}
+.timeline-item.current .timeline-connector {
+  border-inline-start-color: var(--accent-orange);
 }
 
 /* ---- Workflow Steps (horizontal) ---- */

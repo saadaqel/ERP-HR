@@ -25,17 +25,24 @@
         </div>
 
         <div class="request-catalog animate-fadeInUp stagger-1">
-          ${reqTypes.map(rt => `
-            <div class="card card-clickable request-type-card" onclick="window.App.navigate('requests:${rt.id}')">
-              <div class="request-type-icon" style="background: ${rt.bgColor}; color: ${rt.color};">${rt.icon}</div>
-              <h3 class="request-type-title">${window.Utils.getLocal(rt.name)}</h3>
-              <p class="request-type-desc">${window.Utils.getLocal(rt.desc)}</p>
-              
-              <div class="mt-4" style="display:flex; gap:var(--space-2); flex-wrap:wrap;">
-                <span class="badge badge-neutral" style="font-size: 10px;">${t('initiator')}: ${window.Utils.getLocal(rt.initiator)}</span>
+          ${reqTypes.map(rt => {
+            const name = window.Utils.getLocal({ ar: rt.nameAr, en: rt.nameEn });
+            const desc = window.Utils.getLocal({ ar: rt.descAr, en: rt.descEn });
+            const initiator = window.Utils.getLocal({ ar: rt.initiatorAr, en: rt.initiatorEn });
+            
+            return `
+              <div class="card card-clickable request-type-card" onclick="window.App.navigate('requests:${rt.id}')">
+                <div class="req-header">
+                  <div class="req-icon" style="background: ${rt.bgColor}; color: ${rt.color};">${rt.icon}</div>
+                  <h3 class="req-title">${name}</h3>
+                </div>
+                <p class="request-type-desc" style="font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: var(--space-4); line-height: var(--lh-normal); flex: 1;">${desc}</p>
+                <div class="req-meta">
+                  <span class="badge badge-neutral" style="font-size: 10px;">${t('initiator')}: ${initiator}</span>
+                </div>
               </div>
-            </div>
-          `).join('')}
+            `;
+          }).join('')}
         </div>
       `;
       return;
@@ -93,12 +100,32 @@
     const rType = reqTypes.find(rt => rt.id === reqParam);
     
     if (rType) {
+      const name = window.Utils.getLocal({ ar: rType.nameAr, en: rType.nameEn });
+      const desc = window.Utils.getLocal({ ar: rType.descAr, en: rType.descEn });
+      const initiator = window.Utils.getLocal({ ar: rType.initiatorAr, en: rType.initiatorEn });
+      
+      const requiredData = rType.requiredData || [
+        { ar: 'اسم الموظف والرقم الوظيفي', en: 'Employee Name & ID' },
+        { ar: 'القسم أو الإدارة المعنية', en: 'Relevant Department / Sector' },
+        { ar: 'تفاصيل ومبررات الطلب', en: 'Request details and justification' }
+      ];
+      const requiredDocs = rType.requiredDocs || [];
+      const afterApproval = rType.afterApproval || { 
+        ar: 'سيتم تحديث سجلاتك تلقائياً في النظام وتنبيه الجهات المعنية بعد الاعتماد النهائي.', 
+        en: 'Your records will be updated automatically and relevant departments notified upon final approval.' 
+      };
+      const workflowSteps = rType.workflowSteps || [
+        { ar: 'تقديم الطلب من الموظف', en: 'Request Submission' },
+        { ar: 'موافقة المدير المباشر', en: 'Direct Manager Approval' },
+        { ar: 'اعتماد إدارة الموارد البشرية', en: 'HR Approval & Execution' }
+      ];
+
       container.innerHTML = `
         <div class="page-header animate-fadeInDown">
           <div style="display:flex; align-items:center; gap:var(--space-4);">
             <button class="btn btn-ghost" onclick="window.App.navigate('requests')">← ${t('back')}</button>
             <div>
-              <h1 class="page-title">${window.Utils.getLocal(rType.name)}</h1>
+              <h1 class="page-title">${name}</h1>
             </div>
           </div>
         </div>
@@ -107,42 +134,47 @@
           <!-- Left Column: Details -->
           <div class="card card-body">
             <div style="display:flex; align-items:center; gap:var(--space-3); margin-bottom:var(--space-6);">
-              <div class="request-type-icon" style="background: ${rType.bgColor}; color: ${rType.color}; width:48px; height:48px; font-size:24px;">${rType.icon}</div>
+              <div class="req-icon" style="background: ${rType.bgColor}; color: ${rType.color}; width:48px; height:48px; font-size:24px; border-radius:var(--radius-md); display:flex; align-items:center; justify-content:center;">${rType.icon}</div>
               <div>
-                <h2 class="font-bold text-lg">${window.Utils.getLocal(rType.name)}</h2>
-                <p class="text-tertiary">${window.Utils.getLocal(rType.desc)}</p>
+                <h2 class="font-bold text-lg">${name}</h2>
+                <p class="text-tertiary">${desc}</p>
               </div>
             </div>
             
             <div class="divider"></div>
             
-            <h3 class="font-semibold mb-3">شروط التقديم</h3>
-            <ul class="list-disc pr-5 mb-6 text-secondary" style="margin-inline-start: 1rem;">
-              <li>يحق للموظف التقديم على هذا الطلب: <strong>${window.Utils.getLocal(rType.initiator)}</strong></li>
+            <h3 class="font-semibold mb-2" style="font-size: var(--fs-md); color: var(--text-primary); margin-top: var(--space-4);">${t('conditions') || 'شروط التقديم'}</h3>
+            <ul style="list-style-type: disc; padding-inline-start: var(--space-5); margin-bottom: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-relaxed);">
+              <li>يحق للموظف التقديم على هذا الطلب: <strong>${initiator}</strong></li>
               ${rType.id === 'leave' ? '<li>يجب ألا يتجاوز رصيد الإجازة المتاح.</li><li>يجب تحديد موظف بديل للموافقة.</li>' : ''}
               ${rType.id === 'overtime' ? '<li>يجب الحصول على موافقة مبدئية قبل العمل.</li>' : ''}
               ${rType.id === 'salary-certificate' ? '<li>يصدر الخطاب باللغة المطلوبة وموجهاً للجهة المحددة.</li>' : ''}
             </ul>
 
-            <h3 class="font-semibold mb-3">${t('requiredData')}</h3>
-            <div class="grid grid-2 gap-4 mb-6">
-              ${rType.requiredData.map(d => `<div class="info-item"><span style="color:var(--primary); margin-inline-end:4px;">▪</span> ${window.Utils.getLocal(d)}</div>`).join('')}
+            <h3 class="font-semibold mb-2" style="font-size: var(--fs-md); color: var(--text-primary); margin-top: var(--space-4);">${t('requiredData')}</h3>
+            <div style="display:flex; flex-direction:column; gap:var(--space-2); padding-inline-start: var(--space-3); margin-bottom: var(--space-5);">
+              ${requiredData.map(d => `
+                <div style="display:flex; align-items:center; gap:var(--space-2); font-size: var(--fs-base); color: var(--text-secondary);">
+                  <span style="color:var(--accent-orange); font-size: 14px;">▪</span> 
+                  <span>${window.Utils.getLocal(d)}</span>
+                </div>
+              `).join('')}
             </div>
             
-            ${rType.requiredDocs.length > 0 ? `
-              <h3 class="font-semibold mb-3">${t('requiredDocs')}</h3>
-              <div class="mb-6">
-                ${rType.requiredDocs.map(d => `<div class="badge badge-neutral mb-2 ml-2" style="margin-inline-end: 8px;">📎 ${window.Utils.getLocal(d)}</div>`).join('')}
+            ${requiredDocs.length > 0 ? `
+              <h3 class="font-semibold mb-2" style="font-size: var(--fs-md); color: var(--text-primary); margin-top: var(--space-4);">${t('requiredDocs')}</h3>
+              <div style="display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom: var(--space-5);">
+                ${requiredDocs.map(d => `<div class="badge badge-neutral">📎 ${window.Utils.getLocal(d)}</div>`).join('')}
               </div>
             ` : ''}
 
-            <h3 class="font-semibold mb-3">${t('afterReview')}</h3>
-            <div class="timeline mt-4">
+            <h3 class="font-semibold mb-2" style="font-size: var(--fs-md); color: var(--text-primary); margin-top: var(--space-4);">${t('afterReview')}</h3>
+            <div class="timeline timeline-sm" style="padding: 0; margin-bottom: var(--space-2);">
               <div class="timeline-item completed">
-                <div class="timeline-marker"></div>
+                <div class="timeline-marker">✓</div>
                 <div class="timeline-content">
-                  <div class="timeline-title text-success">في حال الموافقة</div>
-                  <div class="text-sm text-secondary">${rType.afterApproval[lang]}</div>
+                  <div class="timeline-title text-success" style="font-weight: var(--fw-bold);">في حال الموافقة</div>
+                  <div class="text-sm text-secondary" style="line-height: var(--lh-normal);">${window.Utils.getLocal(afterApproval)}</div>
                 </div>
               </div>
             </div>
@@ -152,14 +184,15 @@
           <div class="request-sidebar-card card card-body">
             <button class="btn btn-primary btn-lg w-full mb-6" onclick="window.App.showToast('Opening form...', 'info')">${t('submitRequest')}</button>
             
-            <h3 class="font-semibold mb-4">${t('approvalWorkflow')}</h3>
-            <div class="timeline">
-              ${rType.workflowSteps.map((step, idx) => `
-                <div class="timeline-item ${idx === 0 ? 'current' : ''}">
-                  <div class="timeline-marker"></div>
+            <h3 class="font-semibold mb-4" style="font-size: var(--fs-md); color: var(--text-primary); text-align: right;">${t('approvalWorkflow')}</h3>
+            <div class="timeline timeline-sm" style="padding-top: 0;">
+              ${workflowSteps.map((step, idx) => `
+                <div class="timeline-item ${idx === 0 ? 'current' : 'pending'}">
+                  ${idx < workflowSteps.length - 1 ? `<div class="timeline-connector"></div>` : ''}
+                  <div class="timeline-marker">${idx + 1}</div>
                   <div class="timeline-content">
-                    <div class="timeline-title">${window.Utils.getLocal(step)}</div>
-                    ${idx === 0 ? `<div class="text-xs text-tertiary">الخطوة الأولى</div>` : ''}
+                    <div class="timeline-title" style="font-size: var(--fs-base); font-weight: ${idx === 0 ? 'var(--fw-bold)' : 'var(--fw-medium)'};">${window.Utils.getLocal(step)}</div>
+                    ${idx === 0 ? `<div class="text-xs text-tertiary" style="margin-top: 2px;">الخطوة الأولى</div>` : ''}
                   </div>
                 </div>
               `).join('')}
@@ -233,31 +266,33 @@
           </div>
 
           <div class="card card-body">
-            <h3 class="font-semibold mb-4">${t('approvalWorkflow')}</h3>
-            <div class="timeline">
+            <h3 class="font-semibold mb-4" style="font-size: var(--fs-md); color: var(--text-primary); text-align: right;">${t('approvalWorkflow')}</h3>
+            <div class="timeline timeline-sm" style="padding-top: 0;">
               <div class="timeline-item completed">
-                <div class="timeline-marker"></div>
+                <div class="timeline-connector"></div>
+                <div class="timeline-marker">✓</div>
                 <div class="timeline-content">
-                  <div class="timeline-title">تقديم الطلب</div>
-                  <div class="timeline-time">${window.Utils.formatDate(req.createdDate)}</div>
-                  <div class="text-sm text-secondary">بواسطة الموظف</div>
+                  <div class="timeline-title" style="font-size: var(--fs-base); font-weight: var(--fw-medium);">تقديم الطلب</div>
+                  <div class="timeline-time" style="margin-top: 2px;">${window.Utils.formatDate(req.createdDate)}</div>
+                  <div class="text-sm text-secondary" style="margin-top: 2px;">بواسطة الموظف</div>
                 </div>
               </div>
               
               <div class="timeline-item ${req.status === 'pending' ? 'current' : 'completed'}">
-                <div class="timeline-marker"></div>
+                <div class="timeline-connector"></div>
+                <div class="timeline-marker">${req.status === 'pending' ? '⏳' : '✓'}</div>
                 <div class="timeline-content">
-                  <div class="timeline-title">موافقة المدير المباشر</div>
-                  ${req.status === 'pending' ? `<div class="timeline-time text-warning">قيد الانتظار</div>` : `<div class="timeline-time">${window.Utils.formatDate(req.createdDate)}</div>`}
-                  <div class="text-sm text-secondary">${window.Utils.getLocal(req.currentApprover)}</div>
+                  <div class="timeline-title" style="font-size: var(--fs-base); font-weight: var(--fw-medium);">موافقة المدير المباشر</div>
+                  ${req.status === 'pending' ? `<div class="timeline-time text-warning" style="margin-top: 2px;">قيد الانتظار</div>` : `<div class="timeline-time" style="margin-top: 2px;">${window.Utils.formatDate(req.createdDate)}</div>`}
+                  <div class="text-sm text-secondary" style="margin-top: 2px;">${window.Utils.getLocal(req.currentApprover)}</div>
                 </div>
               </div>
               
-              <div class="timeline-item ${req.status === 'approved' ? 'completed' : ''}">
-                <div class="timeline-marker"></div>
+              <div class="timeline-item ${req.status === 'approved' ? 'completed' : 'pending'}">
+                <div class="timeline-marker">${req.status === 'approved' ? '✓' : '🔒'}</div>
                 <div class="timeline-content">
-                  <div class="timeline-title">الاعتماد النهائي (الموارد البشرية)</div>
-                  ${req.status === 'approved' ? `<div class="timeline-time">${window.Utils.formatDate(req.createdDate)}</div>` : ''}
+                  <div class="timeline-title" style="font-size: var(--fs-base); font-weight: var(--fw-medium);">الاعتماد النهائي (الموارد البشرية)</div>
+                  ${req.status === 'approved' ? `<div class="timeline-time" style="margin-top: 2px;">${window.Utils.formatDate(req.createdDate)}</div>` : ''}
                 </div>
               </div>
             </div>
